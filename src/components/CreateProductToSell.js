@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
+import styled from "styled-components";
+
+const InputPrice = styled.input`
+  text-align: right;
+`;
 
 class CreateProductToSell extends Component {
   state = {
@@ -11,10 +16,9 @@ class CreateProductToSell extends Component {
     productInstallments: 1,
     productPaymentMethod: "",
     productLink: "",
-    installments: false,
   };
 
-  //Seta o estado dea categoria de produto conforme o value das options
+  //Seta o estado da categoria de produto conforme o value das options
   handleProductCategory = (event) => {
     this.setState({ productCategory: event.target.value });
   };
@@ -22,6 +26,7 @@ class CreateProductToSell extends Component {
   handleProductNameInput = (event) => {
     this.setState({ productName: event.target.value });
   };
+
   handleDescriptionInput = (event) => {
     this.setState({ productDescription: event.target.value });
   };
@@ -33,6 +38,7 @@ class CreateProductToSell extends Component {
   handleProductPriceInput = (event) => {
     this.setState({ productPrice: event.target.value });
   };
+
   handleProductPaymentMethod = (event) => {
     this.setState({ productPaymentMethod: event.target.value });
   };
@@ -42,6 +48,10 @@ class CreateProductToSell extends Component {
   };
   handleProductLinkInput = (event) => {
     this.setState({ productLink: event.target.value });
+  };
+
+  resetInstallments = (event) => {
+    this.setState({ productInstallments: 1 });
   };
 
   createProduct = () => {
@@ -61,7 +71,13 @@ class CreateProductToSell extends Component {
         {}
       )
       .then((response) => {
-        console.log(response.data);
+        console.log(response.config.data);
+        alert("Produto Adicionado com sucesso!");
+        this.setState({ productName: "" });
+        this.setState({ productDescription: "" });
+        this.setState({ productPrice: "" });
+        this.setState({ productCategory: "" });
+        this.setState({ productLink: "" });
       })
       .catch((error) => {
         console.log(body);
@@ -92,6 +108,7 @@ class CreateProductToSell extends Component {
       ) : (
         <div />
       );
+
     return (
       <div>
         <h1>Crie seu produto abaixo</h1>
@@ -120,14 +137,15 @@ class CreateProductToSell extends Component {
           <label>Usado</label>
         </div>
         <p>Valor do Produto</p>
-        <input
+        <InputPrice
           type="number"
           value={this.state.productPrice}
           onChange={this.handleProductPriceInput}
-        ></input>
+        ></InputPrice>
+        <span> R$</span>
         <p>Forma de Pagamento</p>
-        <div onChange={this.handleProductPaymentMethod}>
-          <select>
+        <div>
+          <select onChange={this.handleProductPaymentMethod}>
             <option value=""></option>
             <option value="Cartão de Crédito">Cartão de Crédito</option>
             <option value="Cartão de Débito">Cartão de Débito</option>
