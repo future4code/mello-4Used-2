@@ -34,7 +34,7 @@ export const Product = styled.div`
     border-radius: 5%;
   }
 `
-export const MyButton = styled(Button)`
+export const ButtonAddCart = styled(Button)`
   font-weight: 700;
   grid-column: 3/4;
   grid-row: 3/4;

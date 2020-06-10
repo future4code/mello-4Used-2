@@ -6,7 +6,7 @@ import {
   Main,
   Header,
   Product,
-  MyButton
+  ButtonAddCart
 } from './style'
 
 const myTheme = createMuiTheme ({
@@ -72,7 +72,7 @@ export default class ProdutoDetalhes extends React.Component {
             </div>
           </Product>
           
-            <MyButton size='medium' variant='extendedFab' color='secondary'>colocar no carrinho</MyButton>
+          <ButtonAddCart size='medium' variant='extendedFab' color='secondary'>colocar no carrinho</ButtonAddCart>
           
         </Main>
       </MuiThemeProvider>
