@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-
+import React, { Component } from 'react'
+import ProdutoDetalhes from './ProdutoDetalhes/ProdutoDetalhes'
+import CreateProductToSell from "./CreateProductToSell"
+import ShoppingCart from './ShoppingCart'
 import { Navbar } from "./Navbar";
 import { Home } from "./Home";
 import { Sales } from "./Sales";
