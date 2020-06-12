@@ -40,6 +40,10 @@ class CreateProductToSell extends Component {
   };
 
   handleProductPaymentMethod = (event) => {
+    if (this.state.productPaymentMethod === "Cartão de Crédito") {
+      this.setState({ productInstallments: 1 });
+    }
+
     this.setState({ productPaymentMethod: event.target.value });
   };
 
@@ -73,11 +77,14 @@ class CreateProductToSell extends Component {
       .then((response) => {
         console.log(response.config.data);
         alert("Produto Adicionado com sucesso!");
-        this.setState({ productName: "" });
-        this.setState({ productDescription: "" });
-        this.setState({ productPrice: "" });
-        this.setState({ productCategory: "" });
-        this.setState({ productLink: "" });
+        this.setState({
+          productName: "",
+          productDescription: "",
+          productPrice: "",
+          productCategory: "",
+          productLink: "",
+          productPaymentMethod: "",
+        });
       })
       .catch((error) => {
         console.log(body);
@@ -85,29 +92,28 @@ class CreateProductToSell extends Component {
   };
 
   render() {
-    const installments =
-      this.state.productPaymentMethod === "Cartão de Crédito" ? (
-        <div>
-          <select
-            onChange={(event) => this.handleProductInstallmentsSelect(event)}
-          >
-            <option value={1}> 1</option>
-            <option value={2}>2</option>
-            <option value={3}>3</option>
-            <option value={4}>4</option>
-            <option value={5}>5</option>
-            <option value={6}>6</option>
-            <option value={7}>7</option>
-            <option value={8}>8</option>
-            <option value={9}>9</option>
-            <option value={10}>10</option>
-            <option value={11}>11</option>
-            <option value={12}>12</option>
-          </select>
-        </div>
-      ) : (
-        <div />
-      );
+    const installments = this.state.productPaymentMethod ===
+      "Cartão de Crédito" && (
+      <div>
+        <select
+          onChange={this.handleProductInstallmentsSelect}
+          value={this.state.productInstallments}
+        >
+          <option value={1}> 1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+          <option value={6}>6</option>
+          <option value={7}>7</option>
+          <option value={8}>8</option>
+          <option value={9}>9</option>
+          <option value={10}>10</option>
+          <option value={11}>11</option>
+          <option value={12}>12</option>
+        </select>
+      </div>
+    );
 
     return (
       <div>
@@ -116,9 +122,12 @@ class CreateProductToSell extends Component {
         <input
           value={this.state.productName}
           onChange={this.handleProductNameInput}
-        ></input>
+        />
         <p>Qual a categoria do seu produto?</p>
-        <select onChange={this.handleProductCategory}>
+        <select
+          onChange={this.handleProductCategory}
+          value={this.state.productCategory}
+        >
           <option value=""></option>
           <option value="Roupa">Roupa</option>
           <option value="Acessório">Acessório</option>
@@ -130,11 +139,23 @@ class CreateProductToSell extends Component {
           value={this.state.productDescription}
           onChange={this.handleDescriptionInput}
         />
-        <div onChange={(event) => this.handleNewUsed(event)}>
-          <input type="radio" name="new-used" value="Novo"></input>
-          <label>Novo</label>
-          <input type="radio" name="new-used" value="Usado"></input>
-          <label>Usado</label>
+        <div>
+          <input
+            type="radio"
+            name="new-used"
+            id="new-radio"
+            value="Novo"
+            onChange={this.handleNewUsed}
+          />
+          <label htmlFor="new-radio">Novo</label>
+          <input
+            type="radio"
+            id="used-radio"
+            name="new-used"
+            value="Usado"
+            onChange={this.handleNewUsed}
+          />
+          <label htmlFor="used-radio">Usado</label>
         </div>
         <p>Valor do Produto</p>
         <InputPrice
@@ -145,7 +166,10 @@ class CreateProductToSell extends Component {
         <span> R$</span>
         <p>Forma de Pagamento</p>
         <div>
-          <select onChange={this.handleProductPaymentMethod}>
+          <select
+            onChange={this.handleProductPaymentMethod}
+            value={this.state.productPaymentMethod}
+          >
             <option value=""></option>
             <option value="Cartão de Crédito">Cartão de Crédito</option>
             <option value="Cartão de Débito">Cartão de Débito</option>
