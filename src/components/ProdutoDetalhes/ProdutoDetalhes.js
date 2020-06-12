@@ -1,12 +1,12 @@
 import React from 'react'
 import axios from 'axios'
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core'
-import Button from '@material-ui/core/Button'
+import ShoppingCart from '../ShoppingCart'
 import {
   Main,
-  Header,
   Product,
-  ButtonAddCart
+  ButtonAddCart,
+  ButtonBack
 } from './style'
 
 const myTheme = createMuiTheme ({
@@ -23,11 +23,7 @@ const myTheme = createMuiTheme ({
 export default class ProdutoDetalhes extends React.Component {
   state = {
     productList: '',
-    productName: '',
-    productImages: [],
-    productDescription: '',
-    productPrice: '',
-    productId: 'cKkI4jW5Dxana5OrPZyK'
+    cartDiv: true
   }
 
   componentDidMount = () => {
@@ -55,26 +51,30 @@ export default class ProdutoDetalhes extends React.Component {
       })
   }
 
+  onClickAddToCart = () => {
+
+  }
+
   render() {
     console.log(this.state.productImgs)
     return(
       <MuiThemeProvider theme={myTheme}>
       <Main>
-          <Header>
-            <h2>header</h2>
-          </Header>
+        {this.state.cartDiv ?
+        <ShoppingCart /> :
+        <div>
           <Product>
-            <img alt='produto' src={this.state.productImages} />
+            <img alt='produto' src={this.props.productImages} />
             <div>
-              <h2>{this.state.productName}</h2>
-              <p>{this.state.productDescription}</p>
-              <p>R$ {this.state.productPrice}</p>
+              <h2>{this.props.productName}</h2>
+              <p>{this.props.productDescription}</p>
+              <p>R$ {this.props.productPrice}</p>
             </div>
           </Product>
-          
-          <ButtonAddCart size='medium' variant='extendedFab' color='secondary'>colocar no carrinho</ButtonAddCart>
-          
-        </Main>
+          <ButtonAddCart onCLick={this.onClickAddToCart} size='medium' variant='extendedFab' color='secondary'>colocar no carrinho</ButtonAddCart>
+          <ButtonBack onClick={this.props.onClickBack} variant='text' color='primary'>escolher mais produtos</ButtonBack>
+        </div>}
+      </Main>
       </MuiThemeProvider>
     )
   }
