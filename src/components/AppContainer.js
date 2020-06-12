@@ -1,12 +1,12 @@
+/* eslint-disable default-case */
 import React, { Component } from "react";
 import styled from "styled-components";
-import React, { Component } from 'react'
-import ProdutoDetalhes from './ProdutoDetalhes/ProdutoDetalhes'
 import CreateProductToSell from "./CreateProductToSell"
 import ShoppingCart from './ShoppingCart'
 import { Navbar } from "./Navbar";
 import { Home } from "./Home";
-import { Sales } from "./Sales";
+import ProductDetails from './ProdutoDetalhes/ProdutoDetalhes'
+// import { Sales } from "./Sales";
 import { Store } from "./Store";
 
 export const ComponentsContainer = styled.div`
@@ -34,22 +34,29 @@ export class AppContainer extends Component {
     this.setState({ renderedScreen: "store" });
   };
 
+  handleProductDetails = () => {
+    this.setState({ renderedScreen: "product" });
+  };
+
   render() {
     const rendersScreen = () => {
-      switch (this.state.renderedScreen) {
-        case "home":
-          return (
-            <Home
-              renderSalesScreenProps={this.handleSalesLink}
-              renderStoreScreenProps={this.handleStoreLink}
-            />
-          );
-        case "sales":
-          return <Sales />;
-        case "store":
-          return <Store />;
-        default:
-      }
+      // switch (this.state.renderedScreen) {
+      //   case "home":
+      //     return (
+      //       <Home
+      //         renderSalesScreenProps={this.handleSalesLink}
+      //         renderStoreScreenProps={this.handleStoreLink}
+      //       />
+      //     );
+      //   case "store":
+      //     return (
+      //       <Store
+      //         renderProductDetailsScreenProps={this.handleProductDetails}
+      //       />
+      //     );
+      //   case "product":
+      //     return <ProductDetails />;
+      // }
     };
 
     return (
@@ -59,6 +66,7 @@ export class AppContainer extends Component {
           renderSalesScreenProps={this.handleSalesLink}
           renderStoreScreenProps={this.handleStoreLink}
         />
+        <Store />
         <ScreenComponents>{rendersScreen()}</ScreenComponents>
       </ComponentsContainer>
     );
