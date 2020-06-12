@@ -21,14 +21,28 @@ export class Store extends React.Component {
   state = {
     productDetailsDiv: false,
     productList: [],
+    productName: '', 
+    productImages: '',
+    productDescription: '',
+    productPrice: '',
+    productId: ''
   };
 
   componentDidMount = () => {
-    this.getProduct()
+    this.getProductList()
   }
 
-  getProduct = (productId) => {
-    productId = this.state.productId
+  getProductList = () => {
+    axios.get('https://us-central1-labenu-apis.cloudfunctions.net/fourUsedTwo/products')
+      .then((response) => {
+        this.setState({productList: response.data.products})
+      })
+      .catch((error) => {
+        window.alert(error)
+      })
+  }
+
+  getProductById = (productId) => {
     axios.get('https://us-central1-labenu-apis.cloudfunctions.net/fourUsedTwo/products')
       .then((response) => {
         this.setState({productList: response.data.products})
@@ -41,22 +55,22 @@ export class Store extends React.Component {
             productPrice: product.price
           })
         })
+        this.changeRender()
       }) 
       .catch((error) => {
         window.alert(error)
       })
   }
 
-  onClickCards = (id) => {
-    // this.setState({productDetailsDiv: !this.state.productDetailsDiv})
-    window.alert(id)
+  changeRender = () => {
+    this.setState({productDetailsDiv: !this.state.productDetailsDiv})
   }
 
   render() {
     console.log(this.state.productList)
     const renderedProductList = this.state.productList.map((product) => {
       return (
-        <div onClick={() => this.onClickCards(product.id)}>
+        <div onClick={() => this.getProductById(product.id)}>
           <Card
             key={product.id}
             imageProps={product.photos}
@@ -72,7 +86,13 @@ export class Store extends React.Component {
     return (
       <div>
         {this.state.productDetailsDiv ?
-        <ProdutoDetalhes /> :
+        <ProdutoDetalhes 
+          productName={this.state.productName}
+          productPrice={this.state.productPrice}
+          productDescription={this.state.productDescription}
+          productImages={this.state.productImages}
+          onClickBack={this.changeRender}
+        /> :
         <StoreContainer>
           <ListContainer >{renderedProductList}</ListContainer>
         </StoreContainer>}
