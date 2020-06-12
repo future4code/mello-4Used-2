@@ -77,13 +77,13 @@ class ShoppingCart extends Component {
   };
 
   render() {
-    // const productPrice = this.state.cartList.map((product) => {
-    //   return Number(product.price);
-    // });
+    const productPrice = this.state.cartList.map((product) => {
+      return Number(product.price);
+    });
 
-    // productPriceTotal = productPrice.reduce(
-    //   (productPriceTotal, (productPrice) => productPriceTotal + productPrice, 0)
-    // );
+    productPriceTotal = productPrice.reduce(
+      (productPriceTotal, (productPrice) => productPriceTotal + productPrice, 0)
+    );
 
     const cartTotalPrice =
       this.state.cartList.length !== 0 ? (
