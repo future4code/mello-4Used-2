@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import DeleteFromCart from "@material-ui/icons/Delete";
+import { ButtonBack } from "./ProdutoDetalhes/style";
+
 
 const CartContainer = styled.div`
   border: 1px solid #a1a0d2;
@@ -38,8 +40,7 @@ const ProductContainer = styled.div`
 
 class ShoppingCart extends Component {
   state = {
-    products: [],
-    cartList: [],
+    cartList: this.props.cartList,
   };
 
   addToCart = (product) => {
@@ -57,24 +58,6 @@ class ShoppingCart extends Component {
     });
     this.setState({ cartList: listOfProductsFromCart });
   };
-  getProducts = () => {
-    axios
-      .get(
-        "https://us-central1-labenu-apis.cloudfunctions.net/fourUsedTwo/products",
-        {}
-      )
-      .then((response) => {
-        console.log(response.data.products);
-        this.setState({ products: response.data.products });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  componentDidMount = () => {
-    this.getProducts();
-  };
 
   render() {
     // const productPrice = this.state.cartList.map((product) => {
@@ -85,32 +68,17 @@ class ShoppingCart extends Component {
     //   (productPriceTotal, (productPrice) => productPriceTotal + productPrice, 0)
     // );
 
-    const cartTotalPrice =
-      this.state.cartList.length !== 0 ? (
-        <div>
-          <p>{productPriceTotal}</p>
-        </div>
-      ) : (
-        <div></div>
-      );
+    // const cartTotalPrice =
+    //   this.state.cartList.length !== 0 ? (
+    //     <div>
+    //       <p>{productPriceTotal}</p>
+    //     </div>
+    //   ) : (
+    //     <div></div>
+    //   );
 
     return (
       <div>
-        {this.state.products.map((product) => {
-          return (
-            <div>
-              <p> {product.name}</p>
-              <p>
-                {"R$ "}
-                {product.price}
-              </p>
-
-              <button onClick={() => this.addToCart(product)}>
-                Adicionar ao Carrinho
-              </button>
-            </div>
-          );
-        })}
         <div>
           <h1>Carrinho </h1>
           <CartContainer>
@@ -134,8 +102,9 @@ class ShoppingCart extends Component {
               );
             })}
           </CartContainer>
-          <div>{cartTotalPrice}</div>
+          <div></div>
         </div>
+        <button onClick={this.props.onClickBack}>Voltar</button>
       </div>
     );
   }

@@ -21,6 +21,10 @@ export default class ProdutoDetalhes extends React.Component {
     cartDiv: false,
   };
 
+  returnToStore = () => {
+    
+  }
+
   componentDidMount = () => {
     this.getProduct();
   };
